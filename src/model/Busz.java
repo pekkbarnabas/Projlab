@@ -59,7 +59,18 @@ public class Busz extends Jarmu {
     public void megcsuszik() { Skeleton.hivas(this, "megcsuszik()"); Skeleton.end(""); }
 
     @Override
-    public void utkozik(Jarmu masik) { Skeleton.hivas(this, "utkozik(masik)"); Skeleton.end(""); }
+    public void utkozik(Jarmu masik) { 
+        Skeleton.hivas(this, "utkozik(" + (masik != null ? masik.getNev() : "null") + ")"); 
+        
+        this.buntetoIdo = 3; 
+        
+        // A sáv járhatatlanná válik
+        if (this.aktualisSav != null) {
+            this.aktualisSav.setBlokkolt(true);
+        } 
+        
+        Skeleton.end(""); 
+    }
 
     public void setTulajdonos(Buszvezeto tulajdonos) { this.tulajdonos = tulajdonos; }
 

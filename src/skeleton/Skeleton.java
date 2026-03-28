@@ -31,6 +31,9 @@ public class Skeleton {
             case 6: megcsuszasAtsodrodasTeszt(); break;
             case 7: megcsuszasBalesetTeszt(); break;
             case 8: vegallomasraErTeszt(); break;
+            case 9: vegallomasraErKoztesTeszt(); break;
+            case 10: buszBalesetTeszt(); break;
+            default: System.out.println("Nincs ilyen sorszámú teszteset.");
         }
     }
 
@@ -259,9 +262,66 @@ public class Skeleton {
         b.vegallomasraEr(aktualis);
     }
 
-    
+    /**
+     * UC-09: Busz áthaladása köztes csomóponton
+     */
+    private static void vegallomasraErKoztesTeszt() {
+        ENABLED = false; // Setup alatt nincs logolás
 
+        
+        Busz b = new Busz();
+        b.setNev("b");
+        
+        Buszvezeto bv = new Buszvezeto();
+        
+        // Ez az a csomópont, amin a busz éppen áthalad
+        Csomopont aktualis = new Csomopont();
+        aktualis.setNev("aktualis");
+        
+        // Létrehozunk egy másik csomópontot is, ami a busz igazi végállomása lesz
+        Csomopont igaziCel = new Csomopont();
+        igaziCel.setNev("igaziCel");
 
+        b.setTulajdonos(bv);
+        
+        // A busz végállomását az 'igaziCel'-re állítjuk, 
+        // így amikor az 'aktualis'-ra lép, tudni fogja, hogy az csak köztes állomás.
+        b.setVegallomas(igaziCel); 
+
+        ENABLED = true; 
+
+        
+        b.vegallomasraEr(aktualis);
+    }
+
+/**
+     * UC-10: Busz balesetet szenved
+     */
+    private static void buszBalesetTeszt() {
+        ENABLED = false;
+
+        // Objektumok létrehozása
+        Auto a = new Auto();
+        a.setNev("a");
+        Busz b = new Busz();
+        b.setNev("b");
+        Sav s = new Sav();
+
+        // Tesztkörnyezet beállítása
+        b.setAktualisSav(s);
+        a.setAktualisSav(s);
+        a.setTesztSodrodas(false); // A saját sávjában fog megcsúszni
+
+        
+        // Mivel a sáv nem jeges a setup fázisban, az elfogad nem indít automatikus megcsúszást.
+        s.elfogad(b);
+        s.elfogad(a);
+
+        ENABLED = true; 
+
+        
+        a.megcsuszik();
+    }
 
 
 

@@ -38,7 +38,12 @@ public class Auto extends Jarmu {
 
         if (!tesztSodrodas) {
             if (aktualisSav != null) {
-                aktualisSav.getRajtaAllok();
+                List<Jarmu> rajta = aktualisSav.getRajtaAllok();
+                for (Jarmu j : rajta) {
+                    if (j != this) {    //önmagával nem ütközik
+                        j.utkozik(this); 
+                    }
+                }
             }
         } else {
             if (aktualisSav != null) {
@@ -87,7 +92,7 @@ public class Auto extends Jarmu {
         }
         
         if (blokkolt) {
-            // *** UC-02 Logika: Kikerülés ***
+            //  Kikerülés
             List<Sav> szomszedok = aktualisSav.getSzomszedok();
             if (szomszedok != null && !szomszedok.isEmpty()) {
                 Sav szomszedos = szomszedok.get(0);
@@ -98,7 +103,7 @@ public class Auto extends Jarmu {
                 }
             }
         } else {
-            // *** UC-01 Logika: Normál haladás ***
+            //  Normál haladás
             pozicio += 0.1f; 
             
             if (pozicio >= 1.0f) {
@@ -123,7 +128,7 @@ public class Auto extends Jarmu {
         Skeleton.end("");
     }
 
-    // Új metódus az átsoroláshoz
+    // metódus az átsoroláshoz
     public void savotValt(Sav ujSav) {
         Skeleton.hivas(this, "savotValt(szomszedos)");
         
