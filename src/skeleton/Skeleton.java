@@ -4,6 +4,7 @@ import model.Auto;
 import model.Busz;
 import model.Buszvezeto;
 import model.Csomopont;
+import model.Idojaras;
 import model.Sav;
 import model.Utszakasz;
 
@@ -33,6 +34,11 @@ public class Skeleton {
             case 8: vegallomasraErTeszt(); break;
             case 9: vegallomasraErKoztesTeszt(); break;
             case 10: buszBalesetTeszt(); break;
+            case 11: buntetoIdoLetelteTeszt(); break;
+            case 12: havazasTisztaSavonTeszt(); break;
+            case 13: havazasSozottSavonTeszt(); break;
+            case 14: SavJegesedeseTeszt(); break;
+            case 15: JegpancelSozasUtanTeszt(); break;
             default: System.out.println("Nincs ilyen sorszámú teszteset.");
         }
     }
@@ -324,9 +330,111 @@ public class Skeleton {
     }
 
 
+    /**
+     * UC-11: Jármű büntetőidejének letelte
+     */
+    private static void buntetoIdoLetelteTeszt() {
+        ENABLED = false; 
+
+        // Objektum létrehozása
+        Auto a = new Auto();
+        a.setNev("a");
+        
+        // Beállítjuk a büntetőidőt 1-re
+        a.setBuntetoIdo(1);
+
+        ENABLED = true; 
+
+        
+        a.idotLep();
+    }
+
+    /**
+     * UC-12: Havazás tiszta sávon
+     */
+    private static void havazasTisztaSavonTeszt() {
+        ENABLED = false; // Setup alatt nincs logolás
+
+        // Objektumok létrehozása
+        Idojaras idj = new Idojaras();
+        Sav s = new Sav();
+        
+        
+        idj.setIntenzitas(2);
+        s.setHovastagsag(0); // Tiszta sáv, 0 hóval
+        
+        // Összekötjük az időjárást a sávval
+        idj.setSavok(java.util.Arrays.asList(s));
+
+        ENABLED = true; 
+
+        
+        idj.idotLep();
+    }
+
+    /**
+     * UC-13: Havazás sózott sávon
+     */
+    private static void havazasSozottSavonTeszt() {
+        ENABLED = false; 
+
+        //Objektumok létrehozása
+        Idojaras idj = new Idojaras();
+        Sav s = new Sav();
+        
+       
+        idj.setIntenzitas(2);
+        s.setHovastagsag(0); 
+        
+        // A sáv sózott állapotba kerül!
+        s.setSoMennyiseg(1); 
+        
+        idj.setSavok(java.util.Arrays.asList(s));
+
+        ENABLED = true; 
+
+        
+        idj.idotLep();
+    }
+
+    /**
+     * UC-14: Sáv jegesedése forgalom hatására
+     */
+    private static void SavJegesedeseTeszt() {
+        ENABLED = false; // Setup alatt nincs logolás
+
+        //  Objektum létrehozása
+        Sav s = new Sav();
+        
+        
+        s.setHovastagsag(5); // Legyen valamennyi hó, ami letaposódik
+        
+        
+        s.setAthaladasokSzama(4); 
+
+        ENABLED = true; 
+        
+        s.atHaladasRegisztralasa();
+    }
 
 
+    /**
+     * UC-15: Jégpáncél eltűnése sózás után
+     */
+    private static void JegpancelSozasUtanTeszt() {
+        ENABLED = false; 
 
+        //bjektum létrehozása
+        Sav s = new Sav();
+        
+        
+        s.setJegpancel(true);  // A sáv be van fagyva
+        s.setSozasIdozito(1);  // Az időzítő pont most fog lejárni
+
+        ENABLED = true; 
+
+        s.idotLep();
+    }
 
 
 

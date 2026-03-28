@@ -17,6 +17,7 @@ public class Auto extends Jarmu {
 
     public void setTesztSodrodas(boolean s) { this.tesztSodrodas = s; }
 
+    public void setBuntetoIdo(int buntetoIdo) { this.buntetoIdo = buntetoIdo; }
     @Override
     public void elakad() {
         Skeleton.hivas(this, "elakad()");
@@ -86,6 +87,14 @@ public class Auto extends Jarmu {
     public void idotLep() {
         Skeleton.hivas(this, "idotLep()");
         
+        if (buntetoIdo > 0) {
+            buntetoIdo--; // Eltelt egy "kör" a büntetésből
+            Skeleton.end(""); 
+            return;
+        }
+
+
+
         boolean blokkolt = false;
         if (aktualisSav != null) {
             blokkolt = aktualisSav.isBlokkolt();

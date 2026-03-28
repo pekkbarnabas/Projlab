@@ -15,22 +15,50 @@ public class Sav implements IIdomulo {
     private Utszakasz utszakasz;
     /** Az Idojaras objektum ismerete. */
     private Idojaras idojaras;
-    
+    /** A sávon lévő só mennyisége.*/
+    private float so;
     /** A sávon lévő hó mennyisége. */
     private int hoVastagsag;
-    /** A só koncentrációja */
-    private int soMennyiseg;
-
-    private boolean melyHo;
 
     /** Fagyott állapot jelzője. */
     private boolean jegPancel;
     /** Baleset esetén igaz. */
     private boolean blokkolt;
 
+    private int athaladasokSzama = 0;
+    
+    private int jegesedesKuszob = 5;
+
+    private int sozasIdozito = 0;
+
+    /**
+     * Beállítja, hogy a sáv blokkolt-e.
+     * @param blokkolt
+     */
     public void setBlokkolt(boolean blokkolt) { this.blokkolt = blokkolt; }
+    /**
+     * Beállítja a szomszédos sávokat, amelyekkel a sáv kapcsolatban áll.
+     * @param szomszedok
+     */
     public void setSzomszedok(List<Sav> szomszedok) { this.szomszedok = szomszedok; }
 
+    /**
+     * Beállítja a sávhoz tartozó sómennyiséget.
+     * @param mennyiseg
+     */
+    public void setSoMennyiseg(int mennyiseg){ 
+        this.so = mennyiseg; 
+    }
+
+    public void setAthaladasokSzama(int szam) {
+        this.athaladasokSzama = szam;
+    }
+
+    public void setSozasIdozito(int idozito) {
+        this.sozasIdozito = idozito;
+    }
+
+    
 
     public boolean isBlokkolt() {
         Skeleton.hivas(this, "isBlokkolt()");
@@ -46,8 +74,7 @@ public class Sav implements IIdomulo {
             rajtaAllok.add(j);
         }
         
-        if (this.melyHo) {
-            this.isMelyHo(); 
+        if (isMelyHo()) { 
             j.elakad();
         } else if (this.jegPancel) {
             j.megcsuszik();
@@ -62,7 +89,7 @@ public class Sav implements IIdomulo {
     }
 
     public boolean isMelyHo() {
-        melyHo = false;
+        boolean melyHo = false;
         Skeleton.hivas(this, "isMelyHo()");
         if (hoVastagsag >= 10)
             melyHo = true;
@@ -71,7 +98,9 @@ public class Sav implements IIdomulo {
     }
 
     public void setJegpancel(boolean jeges) { 
+        Skeleton.hivas(this, "setJegPancel(" + jeges + ")");
         this.jegPancel = jeges; 
+        Skeleton.end(""); 
     }
 
     /** A jármű kikerül a listából. */
@@ -102,12 +131,29 @@ public class Sav implements IIdomulo {
     /** Növeli a számlálót a jegesedés számításához. */
     public void atHaladasRegisztralasa() {
         Skeleton.hivas(this, "atHaladasRegisztralasa()");
+        this.athaladasokSzama++;
+            if (athaladasokSzama >= jegesedesKuszob) {
+                setJegpancel(true);
+            }
         Skeleton.end("");
+    }
+
+    
+    public boolean isSozott(){
+        Skeleton.hivas(this, "isSozott()");
+        
+        boolean sozott = this.so > 0; 
+        
+        Skeleton.end(sozott ? "true" : "false");
+        return sozott;
     }
 
     /** Növeli a sávon lévő hó mennyiségét. */
     public void hoNovel(int mennyiseg) {
         Skeleton.hivas(this, "hoNovel(" + mennyiseg + ")");
+        if(!isSozott()) {
+            this.hoVastagsag += mennyiseg;
+        }
         Skeleton.end("");
     }
 
@@ -139,6 +185,20 @@ public class Sav implements IIdomulo {
     @Override
     public void idotLep() {
         Skeleton.hivas(this, "idotLep()");
+
+        // Ha van aktív sózás, csökkentjük az időzítőt
+        if (sozasIdozito > 0) {
+            sozasIdozito--;
+            
+            // Ha az időzítő lejárt (0 lett) és van jégpáncél, akkor az felolvad
+            if (sozasIdozito == 0 && this.jegPancel) {
+                this.setJegpancel(false);
+                
+                this.hoVastagsag = 0; 
+            }
+        }
         Skeleton.end("");
     }
+
+    
 }
