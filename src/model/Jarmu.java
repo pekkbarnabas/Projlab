@@ -49,5 +49,5 @@ public abstract class Jarmu implements IIdomulo {
     public void setAktualisUtszakasz(Utszakasz ut) { this.aktualisUtszakasz = ut; }
     public void setPozicio(float p) { this.pozicio = p; }
     public String getNev() { return this.nev; }
-    public void setnev(String nev) { this.nev = nev; }
+    public void setNev(String nev) { this.nev = nev; }
 }

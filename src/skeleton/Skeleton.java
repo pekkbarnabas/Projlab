@@ -22,6 +22,12 @@ public class Skeleton {
 
         switch(sorszam){
             case 1: autoNormalMozgasTeszt(); break;
+            case 2: kikerulesTeszt(); break;
+            case 3:sikertelenKikerulesTeszt(); break;
+            case 4: elakadasTeszt(); break;
+            case 5: megcsuszasSajatTeszt(); break;
+            case 6: megcsuszasAtsodrodasTeszt(); break;
+            case 7: megcsuszasBalesetTeszt(); break;
         }
     }
 
@@ -54,29 +60,170 @@ public class Skeleton {
      */
     private static void autoNormalMozgasTeszt() {
         ENABLED = false;
-        // 1-5. lépés a kommunikációs diagramon: Pontosan 5 objektum létrehozása (<<create>>)
         Auto a1 = new Auto();
-        a1.setnev("a1");
+        a1.setNev("a1");
         Csomopont cs = new Csomopont();
         Utszakasz ut = new Utszakasz();
         Sav szomszedos = new Sav();
         Sav aktualis = new Sav();
 
-        // Tesztkörnyezet gráfjának összekötése (Ezek a setterek nem logolnak a konzolra!)
+        
         ut.setVegpont(cs); 
         cs.setKijaratok(java.util.Arrays.asList(ut)); 
         ut.setSavok(java.util.Arrays.asList(szomszedos));
 
-        // Az Autó alapállapotának beállítása az analízis modell szerint (nem ismeri a csomópontot)
+        
         a1.setAktualisUtszakasz(ut); 
         a1.setAktualisSav(aktualis);
-        a1.setPozicio(1.0f); // Jelképesen: elérte az útszakasz végét, ezért fog navigálni
+        a1.setPozicio(1.0f); 
 
-        // 6. lépés a kommunikációs diagramon: elfogad(a1)
+        
         aktualis.elfogad(a1);
         
         ENABLED = true;
-        // Szekvencia diagram szerinti végrehajtás indítása (Rendszer -> idotLep())
+        
         a1.idotLep();
+    }
+
+    /**
+     * UC-02: Autó sikeres kikerülési manővere
+     */
+    private static void kikerulesTeszt() {
+        ENABLED = false; // Naplózás kikapcsolása a setup idejére
+
+        // 3 objektum létrehozása
+        Sav aktualis = new Sav();
+        Sav szomszedos = new Sav();
+        Auto a1 = new Auto();
+        a1.setNev("a1"); 
+
+        aktualis.setBlokkolt(true);       // Az aktuális sáv blokkolt lesz
+        szomszedos.setBlokkolt(false);    // A szomszédos szabad
+        aktualis.setSzomszedok(java.util.Arrays.asList(szomszedos)); 
+        a1.setAktualisSav(aktualis);
+
+        aktualis.elfogad(a1);
+
+        ENABLED = true; // Naplózás visszakapcsolása
+
+        a1.idotLep();
+    }
+
+    /**
+     * UC-03: Autó sikertelen kikerülési manővere
+     */
+    private static void sikertelenKikerulesTeszt() {
+        ENABLED = false; // Naplózás kikapcsolása a setup idejére
+
+        // 1-3. lépés a kommunikációs diagramon
+        Sav aktualis = new Sav();
+        Sav szomszedos = new Sav();
+        Auto a1 = new Auto();
+        a1.setNev("a1"); 
+
+        // Tesztkörnyezet beállítása
+        aktualis.setBlokkolt(true);       
+        
+        // ITT A KÜLÖNBSÉG: A szomszédos sáv is blokkolt!
+        szomszedos.setBlokkolt(true);    
+        
+        aktualis.setSzomszedok(java.util.Arrays.asList(szomszedos)); 
+        a1.setAktualisSav(aktualis);
+
+        // 4. lépés a kommunikációs diagramon: ráhelyezés
+        aktualis.elfogad(a1);
+
+        ENABLED = true; // Naplózás visszakapcsolása
+
+        // Végrehajtás: sd UC-3
+        a1.idotLep();
+    }
+
+    /**
+     * UC-04: Autó elakadása extrém mély hóban
+     */
+    private static void elakadasTeszt() {
+        ENABLED = false;
+
+        Sav s1 = new Sav();
+        Auto a1 = new Auto();
+        a1.setNev("a1"); 
+
+        s1.setHovastagsag(11);
+
+        ENABLED = true; 
+
+        
+        s1.elfogad(a1);
+    }
+
+    /**
+     * UC-05: Megcsúszás a saját sávban maradó autóval
+     */
+    private static void megcsuszasSajatTeszt() {
+        ENABLED = false; 
+
+        Sav s1 = new Sav();
+        Auto a1 = new Auto();
+        a1.setNev("a1"); 
+
+        s1.setJegpancel(true);
+        a1.setAktualisSav(s1);
+
+        ENABLED = true;
+
+        s1.elfogad(a1);
+    }
+
+    /**
+     * UC-06: Megcsúszás és átsodródás üres sávba
+     */
+    private static void megcsuszasAtsodrodasTeszt() {
+        ENABLED = false;
+
+        Sav s1 = new Sav();
+        Sav s2 = new Sav();
+        Auto a1 = new Auto();
+        a1.setNev("a1"); 
+
+        s1.setJegpancel(true);
+        s1.setSzomszedok(java.util.Arrays.asList(s2)); 
+        a1.setAktualisSav(s1); 
+
+        a1.setTesztSodrodas(true); 
+
+        ENABLED = true;
+
+        s1.elfogad(a1);
+    }
+
+    /**
+     * UC-07: Megcsúszás, átsodródás és baleset
+     */
+    private static void megcsuszasBalesetTeszt() {
+        ENABLED = false; 
+
+        Sav s1 = new Sav();
+        Sav s2 = new Sav();
+        
+        Auto a1 = new Auto();
+        a1.setNev("a1"); 
+        
+        Auto a2 = new Auto();
+        a2.setNev("a2");
+
+        s1.setJegpancel(true);
+        s1.setSzomszedok(java.util.Arrays.asList(s2)); 
+        a1.setAktualisSav(s1); 
+        
+        
+        s2.elfogad(a2);
+
+        // a1 átsodródik
+        a1.setTesztSodrodas(true); 
+
+        ENABLED = true;
+
+        s1.elfogad(a1);
     }
 }

@@ -10,7 +10,7 @@ public class Sav implements IIdomulo {
     /** Gyűjtemény az azonos útszakaszon belüli szomszédos Sav objektumokról. */
     private List<Sav> szomszedok;
     /** Gyűjtemény a rajta tartózkodó Jarmu objektumokról. */
-    private List<Jarmu> rajtaAllok;
+    private List<Jarmu> rajtaAllok = new java.util.ArrayList<>();
     /** Az az útszakasz amihez a sáv tartozik. */
     private Utszakasz utszakasz;
     /** Az Idojaras objektum ismerete. */
@@ -21,10 +21,16 @@ public class Sav implements IIdomulo {
     /** A só koncentrációja */
     private int soMennyiseg;
 
+    private boolean melyHo;
+
     /** Fagyott állapot jelzője. */
     private boolean jegPancel;
     /** Baleset esetén igaz. */
     private boolean blokkolt;
+
+    public void setBlokkolt(boolean blokkolt) { this.blokkolt = blokkolt; }
+    public void setSzomszedok(List<Sav> szomszedok) { this.szomszedok = szomszedok; }
+
 
     public boolean isBlokkolt() {
         Skeleton.hivas(this, "isBlokkolt()");
@@ -35,13 +41,43 @@ public class Sav implements IIdomulo {
     /** Hozzáadja a járművet a listájához. */
     public void elfogad(Jarmu j) {
         Skeleton.hivas(this, "elfogad(" + j.getNev() + ")");
-        this.atHaladasRegisztralasa();
+        
+        if (!rajtaAllok.contains(j)) {
+            rajtaAllok.add(j);
+        }
+        
+        if (this.melyHo) {
+            this.isMelyHo(); 
+            j.elakad();
+        } else if (this.jegPancel) {
+            j.megcsuszik();
+        } else {
+            this.atHaladasRegisztralasa();
+        }
+        
         Skeleton.end("");
+    }
+    public void setHovastagsag(int mennyiseg){
+        this.hoVastagsag = mennyiseg;
+    }
+
+    public boolean isMelyHo() {
+        melyHo = false;
+        Skeleton.hivas(this, "isMelyHo()");
+        if (hoVastagsag >= 10)
+            melyHo = true;
+        Skeleton.end(melyHo ? "true" : "false");
+        return melyHo;
+    }
+
+    public void setJegpancel(boolean jeges) { 
+        this.jegPancel = jeges; 
     }
 
     /** A jármű kikerül a listából. */
     public void eltavolit(Jarmu j) {
         Skeleton.hivas(this, "eltavolit(" + j.getNev() + ")");
+        rajtaAllok.remove(j);
         Skeleton.end("");
     }
 
@@ -77,13 +113,26 @@ public class Sav implements IIdomulo {
 
     public List<Jarmu> getRajtaAllok() {
         Skeleton.hivas(this, "getRajtaAllok()");
-        Skeleton.end("[Jarmu lista]");
-        return rajtaAllok;
+        
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < rajtaAllok.size(); i++) {
+            sb.append(rajtaAllok.get(i).getNev());
+            if (i < rajtaAllok.size() - 1) sb.append(", ");
+        }
+        sb.append("]");
+        
+        Skeleton.end(sb.toString());
+        
+        return new java.util.ArrayList<>(rajtaAllok);
     }
 
     public List<Sav> getSzomszedok() {
         Skeleton.hivas(this, "getSzomszedok()");
-        Skeleton.end("[Szomszedos Savok]");
+        Skeleton.end("[szomszedos]");
+        return szomszedok;
+    }
+
+    public List<Sav> getSzomszedokCsendes() {
         return szomszedok;
     }
 
