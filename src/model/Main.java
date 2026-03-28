@@ -1,4 +1,5 @@
 package model;
+
 import java.util.Scanner;
 import skeleton.Skeleton;
 

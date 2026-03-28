@@ -1,6 +1,5 @@
 package skeleton;
 
-
 /**
  * A szekeleton működését támogató osztály.
  */
@@ -17,24 +16,19 @@ public class Skeleton {
         System.out.println("\n[ " + sorszam + ". Teszteset elindul... ]");
 
         switch(sorszam){
-            case 1 -> Teszteset1.futtatasa();
-            case 2 -> Teszteset2.futtatasa();
-            case 3 -> Teszteset3.futtatasa();
-            case 4 -> Teszteset4.futtatasa();
-            case 5 -> Teszteset5.futtatasa();
-            default -> System.out.println("Nincs ilyen sorszámú teszteset.");
+            
         }
     }
 
     /**
      * Hívja a megadott objektum metódusát, és nyomon követi a hívásokat.
-     * @param peldanyNev
+     * @param peldany
      * @param uzenet
      */
-    public static void hivas(String peldanyNev, String uzenet){
+    public static void hivas(Object peldany, String uzenet){
         if(!ENABLED) return;
         for(int i = 0; i < behuzas; i++) System.out.print("\t");
-        System.out.println(peldanyNev + "." + uzenet);
+        System.out.println(peldany.getClass().getSimpleName().toLowerCase() + "." + uzenet);
         behuzas++;
     }
 
@@ -48,7 +42,5 @@ public class Skeleton {
         for(int i = 0; i < behuzas; i++) System.out.print("\t");
         System.out.println("return" + (result.isEmpty() ? "" : " " + result));
     }
-
-
 
 }
