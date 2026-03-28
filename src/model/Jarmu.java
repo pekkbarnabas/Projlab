@@ -22,9 +22,19 @@ public abstract class Jarmu implements IIdomulo {
     /** Reagál az ütközésre, mozgásképtelenné válik. */
     public abstract void utkozik(Jarmu masik);
 
+    /** A jármű neve. */
+    protected String nev;
+
     /** Növeli a jármű pozícióját az aktuális sávon, szükség esetén sávot vált. */
     public void lep(Sav ujSav) {
         Skeleton.hivas(this, "lep()");
+        if (aktualisSav != null) {
+            aktualisSav.eltavolit(this);
+        }
+        if (ujSav != null) {
+            ujSav.elfogad(this);
+            this.aktualisSav = ujSav;
+        }
         Skeleton.end("");
     }
 
@@ -34,4 +44,10 @@ public abstract class Jarmu implements IIdomulo {
         Skeleton.hivas(this, "idotLep()");
         Skeleton.end("");
     }
+
+    public void setAktualisSav(Sav s) { this.aktualisSav = s; }
+    public void setAktualisUtszakasz(Utszakasz ut) { this.aktualisUtszakasz = ut; }
+    public void setPozicio(float p) { this.pozicio = p; }
+    public String getNev() { return this.nev; }
+    public void setnev(String nev) { this.nev = nev; }
 }

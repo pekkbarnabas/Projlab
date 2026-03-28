@@ -21,4 +21,8 @@ public class Utszakasz {
         Skeleton.end("[Sav lista]");
         return savok;
     }
+
+    public void setVegpont(Csomopont vegpont) { this.vegpont = vegpont; }
+    public Csomopont getVegpont() { return this.vegpont; }
+    public void setSavok(List<Sav> savok) { this.savok = savok; }
 }

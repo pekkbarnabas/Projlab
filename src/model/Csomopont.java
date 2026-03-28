@@ -16,4 +16,6 @@ public class Csomopont {
         Skeleton.end("[Utszakasz lista]");
         return kijaratok;
     }
+
+    public void setKijaratok(List<Utszakasz> kijaratok) { this.kijaratok = kijaratok; }
 }

@@ -34,13 +34,14 @@ public class Sav implements IIdomulo {
 
     /** Hozzáadja a járművet a listájához. */
     public void elfogad(Jarmu j) {
-        Skeleton.hivas(this, "elfogad(jarmu)");
+        Skeleton.hivas(this, "elfogad(" + j.getNev() + ")");
+        this.atHaladasRegisztralasa();
         Skeleton.end("");
     }
 
     /** A jármű kikerül a listából. */
     public void eltavolit(Jarmu j) {
-        Skeleton.hivas(this, "eltavolit(jarmu)");
+        Skeleton.hivas(this, "eltavolit(" + j.getNev() + ")");
         Skeleton.end("");
     }
 

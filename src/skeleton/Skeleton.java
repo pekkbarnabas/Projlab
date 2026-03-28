@@ -1,10 +1,15 @@
 package skeleton;
 
+import model.Auto;
+import model.Csomopont;
+import model.Sav;
+import model.Utszakasz;
+
 /**
  * A szekeleton működését támogató osztály.
  */
 public class Skeleton {
-    private static final boolean ENABLED = true;
+    private static boolean ENABLED = true;
     private static int behuzas = 0;
 
     /**
@@ -16,7 +21,7 @@ public class Skeleton {
         System.out.println("\n[ " + sorszam + ". Teszteset elindul... ]");
 
         switch(sorszam){
-            
+            case 1: autoNormalMozgasTeszt(); break;
         }
     }
 
@@ -43,4 +48,35 @@ public class Skeleton {
         System.out.println("return" + (result.isEmpty() ? "" : " " + result));
     }
 
+
+    /**
+     * UC-01: Autó normál haladása tiszta sávon
+     */
+    private static void autoNormalMozgasTeszt() {
+        ENABLED = false;
+        // 1-5. lépés a kommunikációs diagramon: Pontosan 5 objektum létrehozása (<<create>>)
+        Auto a1 = new Auto();
+        a1.setnev("a1");
+        Csomopont cs = new Csomopont();
+        Utszakasz ut = new Utszakasz();
+        Sav szomszedos = new Sav();
+        Sav aktualis = new Sav();
+
+        // Tesztkörnyezet gráfjának összekötése (Ezek a setterek nem logolnak a konzolra!)
+        ut.setVegpont(cs); 
+        cs.setKijaratok(java.util.Arrays.asList(ut)); 
+        ut.setSavok(java.util.Arrays.asList(szomszedos));
+
+        // Az Autó alapállapotának beállítása az analízis modell szerint (nem ismeri a csomópontot)
+        a1.setAktualisUtszakasz(ut); 
+        a1.setAktualisSav(aktualis);
+        a1.setPozicio(1.0f); // Jelképesen: elérte az útszakasz végét, ezért fog navigálni
+
+        // 6. lépés a kommunikációs diagramon: elfogad(a1)
+        aktualis.elfogad(a1);
+        
+        ENABLED = true;
+        // Szekvencia diagram szerinti végrehajtás indítása (Rendszer -> idotLep())
+        a1.idotLep();
+    }
 }
