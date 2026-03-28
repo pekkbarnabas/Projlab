@@ -10,6 +10,7 @@ import skeleton.Skeleton;
 public class Csomopont {
     /** Gyűjtemény az Utszakasz objektumokról, amelyek a csomópontból kiindulnak. */
     private List<Utszakasz> kijaratok;
+    private String nev;
 
     public List<Utszakasz> getKijaratok() {
         Skeleton.hivas(this, "getKijaratok()");
@@ -18,4 +19,6 @@ public class Csomopont {
     }
 
     public void setKijaratok(List<Utszakasz> kijaratok) { this.kijaratok = kijaratok; }
+    public void setNev(String nev) { this.nev = nev; }
+    public String getNev() {return this.nev;}
 }

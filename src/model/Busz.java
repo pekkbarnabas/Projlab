@@ -20,12 +20,35 @@ public class Busz extends Jarmu {
      * Megvizsgálja, hogy a busz a célállomásra érkezett-e, ha igen, pontot ad a vezetőnek.
      */
     public void vegallomasraEr(Csomopont aktualis) {
-        Skeleton.hivas(this, "vegallomasraEr(aktualis)");
+        Skeleton.hivas(this, "vegallomasraEr(" + aktualis.getNev() + ")");
+
+        if(this.aktualisVegallomas != null && aktualisVegallomas == aktualis){
+            Csomopont masik = null;
+            if(vegallomasok != null){
+                for(Csomopont v : vegallomasok){
+                    if(v != aktualis) {
+                        masik = v;
+                        break;
+                    }
+                }
+            }
+
+            if(masik != null){
+                setVegallomas(masik);
+            }
+
+            if(tulajdonos != null){
+                tulajdonos.pontotKap();
+            }
+        }
+
+
         Skeleton.end("");
     }
 
-    public void setVegallomas() {
-        Skeleton.hivas(this, "setVegallomas()");
+    public void setVegallomas(Csomopont cs) {
+        Skeleton.hivas(this, "setVegallomas(" + (cs != null ? cs.getNev() : "null") + ")");
+        this.aktualisVegallomas = cs;
         Skeleton.end("");
     }
 
@@ -37,4 +60,8 @@ public class Busz extends Jarmu {
 
     @Override
     public void utkozik(Jarmu masik) { Skeleton.hivas(this, "utkozik(masik)"); Skeleton.end(""); }
+
+    public void setTulajdonos(Buszvezeto tulajdonos) { this.tulajdonos = tulajdonos; }
+
+    public void setVegallomasok(List<Csomopont> vegallomasok) { this.vegallomasok = vegallomasok; }
 }

@@ -1,6 +1,8 @@
 package skeleton;
 
 import model.Auto;
+import model.Busz;
+import model.Buszvezeto;
 import model.Csomopont;
 import model.Sav;
 import model.Utszakasz;
@@ -28,6 +30,7 @@ public class Skeleton {
             case 5: megcsuszasSajatTeszt(); break;
             case 6: megcsuszasAtsodrodasTeszt(); break;
             case 7: megcsuszasBalesetTeszt(); break;
+            case 8: vegallomasraErTeszt(); break;
         }
     }
 
@@ -226,4 +229,45 @@ public class Skeleton {
 
         s1.elfogad(a1);
     }
+
+    /**
+     * UC-08: Végállomásra ér a busz
+     */
+    private static void vegallomasraErTeszt() {
+        ENABLED = false;
+
+        Busz b = new Busz();
+        b.setNev("b");
+        
+        Buszvezeto bv = new Buszvezeto();
+        
+        Csomopont aktualis = new Csomopont();
+        aktualis.setNev("aktualis");
+        
+        Csomopont masik = new Csomopont();
+        masik.setNev("masik");
+
+        b.setTulajdonos(bv);
+        
+        // Lista feltöltése a két állomással
+        b.setVegallomasok(java.util.Arrays.asList(aktualis, masik));
+        
+        // Beállítjuk az aktuális célt
+        b.setVegallomas(aktualis); 
+
+        ENABLED = true;
+        b.vegallomasraEr(aktualis);
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
 }
