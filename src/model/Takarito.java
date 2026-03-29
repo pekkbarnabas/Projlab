@@ -8,7 +8,7 @@ import skeleton.Skeleton;
  */
 public class Takarito {
     /** A játékos egyenlege. */
-    private int penz;
+    private int penz = 0;
     /** Gyűjtemény a birtokolt Hokotro objektumokról. */
     private List<Hokotro> flotta;
     /** A játékos Raktar objektuma. */
@@ -16,6 +16,9 @@ public class Takarito {
 
     public void penztKap() {
         Skeleton.hivas(this, "penztKap()");
+
+        this.penz += 10;
+
         Skeleton.end("");
     }
 
@@ -35,6 +38,22 @@ public class Takarito {
     /** Meghívja a hókotró fejetCserel() metódusát. */
     public void eszkozKiosztas(Hokotro h, IKotrofej ujFej) {
         Skeleton.hivas(this, "eszkozKiosztas(h, ujFej)");
+
+        if (h != null) {
+            // Megnézzük  mi volt eddig rajta
+            IKotrofej regiFej = h.getFej();
+            
+            // Rátesszük az újat 
+            h.fejetCserel(ujFej);
+            
+            // Ha volt rajta régi fej, és van raktárunk, eltesszük!
+            if (regiFej != null && this.raktar != null) {
+                
+                this.raktar.hozzaadFej(regiFej);
+            }
+        }
+
+
         Skeleton.end("");
     }
 
@@ -42,5 +61,15 @@ public class Takarito {
     public void addHokotro(Hokotro h) {
         Skeleton.hivas(this, "addHokotro(h)");
         Skeleton.end("");
+    }
+
+    public Raktar getRaktar() {
+        Skeleton.hivas(this, "getRaktar()");
+        Skeleton.end("r");
+        return this.raktar;
+    }
+
+    public void setRaktar(Raktar raktar) {
+        this.raktar = raktar;
     }
 }

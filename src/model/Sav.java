@@ -16,7 +16,7 @@ public class Sav implements IIdomulo {
     /** Az Idojaras objektum ismerete. */
     private Idojaras idojaras;
     /** A sávon lévő só mennyisége.*/
-    private float so;
+    private double so;
     /** A sávon lévő hó mennyisége. */
     private int hoVastagsag;
 
@@ -58,6 +58,9 @@ public class Sav implements IIdomulo {
         this.sozasIdozito = idozito;
     }
 
+    public boolean isJegpancel(){
+        return this.jegPancel;
+    }
     
 
     public boolean isBlokkolt() {
@@ -79,10 +82,7 @@ public class Sav implements IIdomulo {
             if(!(j instanceof Hokotro)){
                 j.elakad();
             }
-        }
-
-
-        if (this.jegPancel) {
+        }else if (this.jegPancel) {
             if(!(j instanceof Hokotro)){
                 j.megcsuszik();
             }
@@ -120,19 +120,32 @@ public class Sav implements IIdomulo {
 
     /** Hókotró hívja meg, csökkenti a hóvastagságot. */
     public void hoCsokkent(int mennyiseg) {
-        Skeleton.hivas(this, "hoCsokkent(" + mennyiseg + ")");
+        String maxSzo = (mennyiseg == Integer.MAX_VALUE) ? "max" : String.valueOf(mennyiseg); //A skeletonhoz, hogy kiírja a max szót
+        Skeleton.hivas(this, "hoCsokkent(" + maxSzo + ")");
+
+        int eltavolitott = this.hoVastagsag;
+        if(mennyiseg < this.hoVastagsag) {
+            eltavolitott = mennyiseg;
+        }
+        this.hoVastagsag -= eltavolitott;
+        
         Skeleton.end("");
     }
 
     /** Feloldja a jegPancel állapotot, és megnöveli a hóvastagságot. */
     public void jegTorese() {
         Skeleton.hivas(this, "jegTorese()");
+
+        this.setJegpancel(false);
+        this.hoNovel(1); // A jegtörés után egy réteg hó/törmelék keletkezik a sávon
+
         Skeleton.end("");
     }
 
     /** Elindítja az olvadást. */
     public void sozas() {
         Skeleton.hivas(this, "sozas()");
+        this.so = 1.0;
         Skeleton.end("");
     }
 
@@ -208,5 +221,7 @@ public class Sav implements IIdomulo {
         Skeleton.end("");
     }
 
-    
+    public int getHovastagsag(){
+        return this.hoVastagsag;
+    }
 }
