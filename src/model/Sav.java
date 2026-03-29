@@ -170,12 +170,23 @@ public class Sav implements IIdomulo {
     }
 
     /** Növeli a sávon lévő hó mennyiségét. */
-    public void hoNovel(int mennyiseg) {
-        Skeleton.hivas(this, "hoNovel(" + mennyiseg + ")");
+    public boolean hoNovel(int mennyiseg) {
+        Skeleton.hivas(this, "hoNovel(mennyiseg)");
+        
+        if (this.utszakasz != null) {
+            int magassag = this.utszakasz.getMagassag();
+            if (magassag == -1) {
+                Skeleton.end("");
+                return false;
+            }
+        }
+        
         if(!isSozott()) {
             this.hoVastagsag += mennyiseg;
         }
+        
         Skeleton.end("");
+        return true;
     }
 
     public List<Jarmu> getRajtaAllok() {
@@ -224,4 +235,10 @@ public class Sav implements IIdomulo {
     public int getHovastagsag(){
         return this.hoVastagsag;
     }
+
+    public void setUtszakasz(Utszakasz u) {
+        this.utszakasz = u;
+    }
+
+
 }

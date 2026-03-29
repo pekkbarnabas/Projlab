@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import skeleton.Skeleton;
 
@@ -9,7 +10,7 @@ import skeleton.Skeleton;
 public class Idojaras implements IIdomulo {
     /** A ciklusonként lehulló hó mennyiseg.. */
     private int intenzitas;
-    private List<Sav> savok;
+    private List<Sav> savok = new ArrayList<>();
     
     /**
      * Beállítja a ciklusonként lehulló hó mennyiségét.
@@ -23,6 +24,15 @@ public class Idojaras implements IIdomulo {
     */
     public void setSavok(List<Sav> savok) { this.savok = savok; }
 
+    /**
+     * Hozzáad egyetlen sávot a megfigyelt sávok listájához.
+     * Csendes metódus, nem logol a Skeletonba.
+     */
+    public void addSav(Sav s) {
+        if (s != null) {
+            this.savok.add(s);
+        }
+    }
 
     /**
      * Végigiterál a sávokon, és minden elemen meghívja a hoNovel(int) függvényt.

@@ -2,6 +2,7 @@ package skeleton;
 
 import model.Arucikk;
 import model.Auto;
+import model.Bolt;
 import model.Busz;
 import model.Buszvezeto;
 import model.Csomopont;
@@ -61,6 +62,16 @@ public class Skeleton {
             case 26: kotrofejCsereTeszt(); break;
             case 27: raktarBovitesTeszt(); break;
             case 28: raktarFogyasztasTeszt(); break;
+            case 29: sikertelenVasarlasTeszt(); break;
+            case 30: soVasarlasaTeszt(); break;
+            case 31: kerozinVasarlasaTeszt(); break;
+            case 32: jegtoroFejVasarlasaTeszt(); break;
+            case 33: soproFejVasarlasaTeszt(); break; 
+            case 34: sarkanyFejVasarlasaTeszt(); break;  
+            case 35: hanyoFejVasarlasaTeszt(); break;
+            case 36: hokotroVasarlasaTeszt(); break;
+            case 37: havazasAlagutbanTeszt(); break;
+            case 38: takaritasTisztaSavonTeszt(); break;
             default: System.out.println("Nincs ilyen sorszámú teszteset.");
         }
     }
@@ -755,4 +766,242 @@ public class Skeleton {
         
         h.kerozintFogyaszt(1);
     }
+
+    /**
+     * UC-29: Vásárlás, de kevés a pénz
+     */
+    private static void sikertelenVasarlasTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar();
+        r.setNev("r");
+        Bolt b = new Bolt();
+        b.setNev("b");
+        
+        // Kapcsolatok és állapotok csendes beállítása
+        t.setRaktar(r);
+        t.setBolt(b);
+        t.setPenz(0); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.SO);
+    }
+
+    /**
+     * UC-30: Só vásárlása (Sikeres vásárlás)
+     */
+    private static void soVasarlasaTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar();
+        r.setNev("r");
+        Bolt b = new Bolt();
+        b.setNev("b");
+        
+        // Kapcsolatok kialakítása
+        t.setRaktar(r);
+        t.setBolt(b);
+
+        // Elegendő pénz a vásárláshoz
+        t.setPenz(100); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.SO);
+    }
+
+    /**
+     * UC-31: Kerozin vásárlása
+     */
+    private static void kerozinVasarlasaTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar();
+        r.setNev("r");
+        Bolt b = new Bolt();
+        b.setNev("b");
+        
+        // Kapcsolatok kialakítása
+        t.setRaktar(r);
+        t.setBolt(b);
+        
+        // Elegendő pénz a vásárláshoz
+        t.setPenz(100); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.KEROZIN);
+    }
+
+    /**
+     * UC-32: Új jégtörőfej vásárlása
+     */
+    private static void jegtoroFejVasarlasaTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar();
+        r.setNev("r");
+        Bolt b = new Bolt();
+        b.setNev("b");
+        
+        // Kapcsolatok kialakítása
+        t.setRaktar(r);
+        t.setBolt(b);
+        
+        // Elegendő pénz a vásárláshoz
+        t.setPenz(100); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.JEGTOROFEJ);
+    }
+
+    /**
+     * UC-33: Új söprőfej vásárlása
+     */
+    private static void soproFejVasarlasaTeszt() {
+        ENABLED = false;
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar(); r.setNev("r");
+        Bolt b = new Bolt(); b.setNev("b");
+
+        // Kapcsolatok kialakítása
+        t.setRaktar(r); 
+        t.setBolt(b);
+
+        // Elegendő pénz a vásárláshoz
+        t.setPenz(100); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.SOPROFEJ);
+    }
+
+    /**
+     * UC-34: Új sárkányfej vásárlása
+     */
+    private static void sarkanyFejVasarlasaTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar(); r.setNev("r");
+        Bolt b = new Bolt(); b.setNev("b");
+
+        // Kapcsolatok kialakítása
+        t.setRaktar(r); 
+        t.setBolt(b);
+
+        // Elegendő pénz a vásárláshoz
+        t.setPenz(100); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.SARKANYFEJ);
+    }
+
+    /**
+     * UC-35: Új hányófej vásárlása
+     */
+    private static void hanyoFejVasarlasaTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar(); r.setNev("r");
+        Bolt b = new Bolt(); b.setNev("b");
+
+        // Kapcsolatok kialakítása
+        t.setRaktar(r); 
+        t.setBolt(b);
+
+        // Elegendő pénz a vásárláshoz
+        t.setPenz(100); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.HANYOFEJ);
+    }
+
+    /**
+     * UC-36: Új Hókotró gép vásárlása
+     */
+    private static void hokotroVasarlasaTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Takarito t = new Takarito();
+        Raktar r = new Raktar(); r.setNev("r");
+        Bolt b = new Bolt(); b.setNev("b");
+        
+        // Kapcsolatok kialakítása   
+        t.setRaktar(r); 
+        t.setBolt(b);
+
+        // Elegendő pénz a vásárláshoz
+        t.setPenz(100); 
+
+        ENABLED = true; 
+
+        t.vasarol(Arucikk.HOKOTRO);
+    }
+
+    /**
+     * UC-37: Havazás alagútban
+     */
+    private static void havazasAlagutbanTeszt() {
+        ENABLED = false; 
+        Idojaras id = new Idojaras();
+        id.setIntenzitas(1);
+        
+        Sav s = new Sav();
+        Utszakasz u = new Utszakasz();
+        
+        u.setMagassag(-1);
+        u.addSav(s); 
+        id.addSav(s);
+        ENABLED = true; 
+
+        id.idotLep();
+    }
+
+    /**
+     * UC-38: Takarítás tiszta sávon, nincs bevétel
+     */
+    private static void takaritasTisztaSavonTeszt() {
+        ENABLED = false; 
+
+        // Objektumok létrehozása
+        Takarito t = new Takarito();
+        Hokotro h = new Hokotro();
+        h.setNev("h");
+        SoproFej sf = new SoproFej();
+        Sav s = new Sav();
+
+        // Tulajdonos és fej beállítása
+        h.setTulajdonos(t);
+        h.fejetCserel(sf);
+
+        // Sáv hóvastagságának beállítása (nincs hó)
+        s.setHovastagsag(0);
+
+        // Hókotró elhelyezése a sávon
+        h.setAktualisSav(s);
+
+        ENABLED = true; 
+
+        h.takarit();
+    }
+
 }

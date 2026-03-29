@@ -31,11 +31,12 @@ public class Raktar {
      * @param f
     */
     public void hozzaadFej(IKotrofej f) {
-        Skeleton.hivas(this, "hozzaadFej(fej)");
+        Skeleton.hivas(this, "hozzaadFej(ujFej)");
         if(this.fejek == null){
             this.fejek = new ArrayList<>();
         }
         this.fejek.add(f);
+
         Skeleton.end("");
     }
 
@@ -44,7 +45,7 @@ public class Raktar {
      * @param mennyiseg
     */
     public void eroforrasBovit(Arucikk targy, int mennyiseg) {
-        Skeleton.hivas(this, "eroforrasBovit(Arucikk." + targy.name() + ")");
+        Skeleton.hivas(this, "eroforrasBovit(Arucikk." + targy.name() + ", mennyiseg)");
         
         int jelenlegi = keszletek.getOrDefault(targy, 0);
         keszletek.put(targy, jelenlegi + mennyiseg);

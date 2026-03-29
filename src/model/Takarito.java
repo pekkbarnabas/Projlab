@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import skeleton.Skeleton;
 
@@ -10,9 +11,11 @@ public class Takarito {
     /** A játékos egyenlege. */
     private int penz = 0;
     /** Gyűjtemény a birtokolt Hokotro objektumokról. */
-    private List<Hokotro> flotta;
+    private List<Hokotro> flotta = new ArrayList<>();
     /** A játékos Raktar objektuma. */
     private Raktar raktar;
+    //** Bolt objektum */
+    private Bolt bolt;
 
     public void penztKap() {
         Skeleton.hivas(this, "penztKap()");
@@ -23,16 +26,49 @@ public class Takarito {
     }
 
     /** Kezdeményezi az Enummal megadott árucikk megvásárlását a boltban. */
-    public void vasarol(Bolt b, Arucikk targy) {
-        Skeleton.hivas(this, "vasarol(bolt, targy)");
+    public void vasarol(Arucikk a) {
+        Skeleton.hivas(this, "vasarol(Arucikk." + a.name() + ")");
+        
+        if (this.bolt != null) {
+            boolean sikeres = this.bolt.elad(this, a);
+            
+            if (sikeres) {
+                if (a == Arucikk.HOKOTRO) {
+                    Hokotro ujHokotro = new Hokotro();
+                    this.addHokotro(ujHokotro); 
+                } 
+                else if (this.raktar != null) {
+                    if (a == Arucikk.SO || a == Arucikk.KEROZIN) {
+                        this.raktar.eroforrasBovit(a, 1);
+                    } else if (a == Arucikk.JEGTOROFEJ) {
+                        this.raktar.hozzaadFej(new JegtoroFej());
+                    } else if (a == Arucikk.SOPROFEJ) {
+                        this.raktar.hozzaadFej(new SoproFej());
+                    } else if (a == Arucikk.SARKANYFEJ) {
+                        this.raktar.hozzaadFej(new SarkanyFej());
+                    } else if (a == Arucikk.HANYOFEJ) {
+                        this.raktar.hozzaadFej(new HanyoFej());
+                    }
+                }
+            }
+        }
+        
         Skeleton.end("");
     }
 
+
     /** A vásárlási folyamat során hívódik meg, fizetést végez. */
     public boolean fizet(int ar) {
-        Skeleton.hivas(this, "fizet(" + ar + ")");
-        Skeleton.end("true");
-        return true;
+        Skeleton.hivas(this, "fizet(ar)");
+
+        if (this.penz >= ar) {
+            this.penz -= ar;
+            Skeleton.end("true");
+            return true;
+        }
+
+        Skeleton.end("false");
+        return false;
     }
 
     /** Meghívja a hókotró fejetCserel() metódusát. */
@@ -59,7 +95,8 @@ public class Takarito {
 
     /** Hozzáad egy újonnan vásárolt vagy beszerzett hókotrót a takarító flottájához.*/
     public void addHokotro(Hokotro h) {
-        Skeleton.hivas(this, "addHokotro(h)");
+        Skeleton.hivas(this, "addHokotro(ujHokotro)");
+        this.flotta.add(h);
         Skeleton.end("");
     }
 
@@ -71,5 +108,13 @@ public class Takarito {
 
     public void setRaktar(Raktar raktar) {
         this.raktar = raktar;
+    }
+
+    public void setBolt(Bolt b) {
+        this.bolt = b;
+    }
+
+    public void setPenz(int osszeg) {
+        this.penz = osszeg;
     }
 }
