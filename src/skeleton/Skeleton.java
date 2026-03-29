@@ -4,6 +4,7 @@ import model.Auto;
 import model.Busz;
 import model.Buszvezeto;
 import model.Csomopont;
+import model.Hokotro;
 import model.Idojaras;
 import model.Sav;
 import model.Utszakasz;
@@ -39,6 +40,7 @@ public class Skeleton {
             case 13: havazasSozottSavonTeszt(); break;
             case 14: SavJegesedeseTeszt(); break;
             case 15: JegpancelSozasUtanTeszt(); break;
+            case 16: hokotroHaladasJegesSavonTeszt(); break;
             default: System.out.println("Nincs ilyen sorszámú teszteset.");
         }
     }
@@ -417,7 +419,6 @@ public class Skeleton {
         s.atHaladasRegisztralasa();
     }
 
-
     /**
      * UC-15: Jégpáncél eltűnése sózás után
      */
@@ -436,6 +437,24 @@ public class Skeleton {
         s.idotLep();
     }
 
+    /**
+     * UC-16: Hókotró biztonságos haladása jeges sávon
+     */
+    private static void hokotroHaladasJegesSavonTeszt() {
+        ENABLED = false; 
 
+        //Objektumok létrehozása
+        Sav s = new Sav();
+        Hokotro h = new Hokotro();
+        h.setNev("h"); 
+
+        
+        s.setJegpancel(true); 
+
+        ENABLED = true; 
+
+        
+        s.elfogad(h);
+    }
 
 }

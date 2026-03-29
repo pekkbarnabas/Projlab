@@ -74,10 +74,18 @@ public class Sav implements IIdomulo {
             rajtaAllok.add(j);
         }
         
-        if (isMelyHo()) { 
-            j.elakad();
-        } else if (this.jegPancel) {
-            j.megcsuszik();
+        if(this.hoVastagsag >= 10){
+            isMelyHo();
+            if(!(j instanceof Hokotro)){
+                j.elakad();
+            }
+        }
+
+
+        if (this.jegPancel) {
+            if(!(j instanceof Hokotro)){
+                j.megcsuszik();
+            }
         } else {
             this.atHaladasRegisztralasa();
         }
