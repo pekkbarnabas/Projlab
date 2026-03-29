@@ -10,6 +10,10 @@ import skeleton.Skeleton;
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * A program fő metódusa, amely elindítja a menürendszert és kezeli a felhasználói bemeneteket.
+     * @param args
+     */
     public static void main(String[] args) {
         boolean fut = true;
         

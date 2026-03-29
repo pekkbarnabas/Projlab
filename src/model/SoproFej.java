@@ -4,6 +4,11 @@ import skeleton.Skeleton;
 
 public class SoproFej implements IKotrofej {
     @Override
+    /**
+     * A sóprófej dolgozik a megadott sávon és hokotróval.
+     * @param s
+     * @param h
+     */
     public void dolgozik(Sav s, Hokotro h) {
         Skeleton.hivas(this, "dolgozik(s, h)");
 

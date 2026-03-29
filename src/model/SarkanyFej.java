@@ -4,6 +4,11 @@ import skeleton.Skeleton;
 
 public class SarkanyFej implements IKotrofej {
     @Override
+    /**
+     * A sárkányfej dolgozik a megadott sávon és hokotróval.
+     * @param s
+     * @param h
+     */
     public void dolgozik(Sav s, Hokotro h) {
         Skeleton.hivas(this, "dolgozik(s, h)");
 
