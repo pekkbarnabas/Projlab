@@ -17,6 +17,10 @@ public class Auto extends Jarmu {
 
     public void setTesztSodrodas(boolean s) { this.tesztSodrodas = s; }
 
+    /**
+     * Beállítja, hogy az autó elakadt-e.
+     * @param buntetoIdo
+     */
     public void setBuntetoIdo(int buntetoIdo) { this.buntetoIdo = buntetoIdo; }
     @Override
     public void elakad() {
@@ -25,6 +29,10 @@ public class Auto extends Jarmu {
         Skeleton.end("");
     }
 
+    /**
+     * Beállítja, hogy az autó elakadt-e.
+     * @param elakadt
+     */
     public void setElakadt(boolean elakadt) {
         Skeleton.hivas(this, "setElakadt(" + elakadt + ")");
         this.elakadt = elakadt;
@@ -32,6 +40,9 @@ public class Auto extends Jarmu {
     }
 
     @Override
+    /**
+     * A megcsúszás kezelése.
+     */
     public void megcsuszik() {
         Skeleton.hivas(this, "megcsuszik()");
         
@@ -75,6 +86,10 @@ public class Auto extends Jarmu {
     }
 
     @Override
+    /**
+     * Az ütközés kezelése.
+     * @param masik
+     */
     public void utkozik(Jarmu masik) {
         Skeleton.hivas(this, "utkozik(" + masik.getNev() + ")");
         
