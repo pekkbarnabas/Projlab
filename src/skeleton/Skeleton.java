@@ -72,6 +72,10 @@ public class Skeleton {
             case 36: hokotroVasarlasaTeszt(); break;
             case 37: havazasAlagutbanTeszt(); break;
             case 38: takaritasTisztaSavonTeszt(); break;
+            case 39: blokkoltSavFelszabaditasaTeszt(); break;
+            case 40: buszMegcsuszasTeszt(); break;
+            case 41: hanyoFejSikertelenTakaritasTeszt(); break;
+            case 42: jegtoroFejSikertelenTakaritasTeszt(); break;
             default: System.out.println("Nincs ilyen sorszámú teszteset.");
         }
     }
@@ -998,6 +1002,112 @@ public class Skeleton {
 
         // Hókotró elhelyezése a sávon
         h.setAktualisSav(s);
+
+        ENABLED = true; 
+
+        h.takarit();
+    }
+
+    /**
+     * UC-39: Blokkolt sáv felszabadítása takarítással
+     */
+    private static void blokkoltSavFelszabaditasaTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás: Objektumok létrehozása
+        Hokotro h = new Hokotro();
+        h.setNev("h");
+        Sav s = new Sav();
+        Auto a = new Auto();
+        a.setNev("a");
+        HanyoFej hf = new HanyoFej();
+        
+        h.fejetCserel(hf);
+        // A Hókotrónak tudnia kell, melyik sávon van, hogy a takarit() működjön
+        h.setAktualisSav(s); 
+
+        // Autó rárakása és blokkolás
+        s.elfogad(a);
+        s.setBlokkolt(true);
+        s.setHovastagsag(5);
+
+        ENABLED = true; 
+
+        s.elfogad(h);
+        h.takarit(); 
+    }
+
+    /**
+     * UC-40: Busz megcsúszása jégpáncélon
+     */
+    private static void buszMegcsuszasTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás: Objektumok létrehozása
+        Auto a = new Auto();
+        a.setNev("a");
+        Busz b = new Busz();
+        b.setNev("b");
+        Sav s = new Sav();
+
+        // Autó rárakása a sávra
+        s.elfogad(a);
+        a.setAktualisSav(s);
+        
+        // Jégpáncél beállítása
+        s.setJegpancel(true);
+
+        ENABLED = true; 
+
+        b.lep(s);
+    }
+
+    /**
+     * UC-41: Hányófej sikertelen takarítása (jégpáncélon)
+     */
+    private static void hanyoFejSikertelenTakaritasTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás: Objektumok létrehozása
+        Hokotro h = new Hokotro();
+        h.setNev("h");
+        HanyoFej hf = new HanyoFej();
+        Sav s = new Sav();
+
+        // Fej felszerelése
+        h.fejetCserel(hf);
+        
+        // Jégpáncél beállítása
+        s.setJegpancel(true);
+        s.setHovastagsag(0); 
+
+        // Hókotró elhelyezése a sávon
+        s.elfogad(h);
+        h.setAktualisSav(s);
+
+        ENABLED = true; 
+
+        h.takarit();
+    }
+
+    /**
+     * UC-42: Jégtörő fej sikertelen jégtörése
+     */
+    private static void jegtoroFejSikertelenTakaritasTeszt() {
+        ENABLED = false; 
+
+        // Inicializálás a kommunikációs diagram alapján
+        Hokotro h = new Hokotro();
+        h.setNev("h");
+        JegtoroFej jf = new JegtoroFej();
+        Sav s = new Sav();
+
+        // Fej felszerelése
+        h.fejetCserel(jf);
+        
+        // Hókotró ráléptetése a tiszta sávra (nincs jégpáncél)
+        s.elfogad(h);
+        h.setAktualisSav(s); 
 
         ENABLED = true; 
 

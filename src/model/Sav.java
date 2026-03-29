@@ -35,7 +35,11 @@ public class Sav implements IIdomulo {
      * Beállítja, hogy a sáv blokkolt-e.
      * @param blokkolt
      */
-    public void setBlokkolt(boolean blokkolt) { this.blokkolt = blokkolt; }
+    public void setBlokkolt(boolean blokkolt) { 
+        Skeleton.hivas(this, "setBlokkolt(" + blokkolt + ")");
+        this.blokkolt = blokkolt; 
+        Skeleton.end("");
+    }
     /**
      * Beállítja a szomszédos sávokat, amelyekkel a sáv kapcsolatban áll.
      * @param szomszedok
@@ -120,7 +124,7 @@ public class Sav implements IIdomulo {
 
     /** Hókotró hívja meg, csökkenti a hóvastagságot. */
     public void hoCsokkent(int mennyiseg) {
-        String maxSzo = (mennyiseg == Integer.MAX_VALUE) ? "max" : String.valueOf(mennyiseg); //A skeletonhoz, hogy kiírja a max szót
+        String maxSzo = (mennyiseg == Integer.MAX_VALUE) ? "max" : String.valueOf(mennyiseg);
         Skeleton.hivas(this, "hoCsokkent(" + maxSzo + ")");
 
         int eltavolitott = this.hoVastagsag;
@@ -129,6 +133,10 @@ public class Sav implements IIdomulo {
         }
         this.hoVastagsag -= eltavolitott;
         
+        if (this.blokkolt) {
+            this.setBlokkolt(false);
+        }
+
         Skeleton.end("");
     }
 
@@ -136,8 +144,10 @@ public class Sav implements IIdomulo {
     public void jegTorese() {
         Skeleton.hivas(this, "jegTorese()");
 
-        this.setJegpancel(false);
-        this.hoNovel(1); // A jegtörés után egy réteg hó/törmelék keletkezik a sávon
+        if (this.jegPancel) {
+            this.setJegpancel(false);
+            this.hoNovel(1);
+        }
 
         Skeleton.end("");
     }

@@ -32,8 +32,8 @@ public abstract class Jarmu implements IIdomulo {
             aktualisSav.eltavolit(this);
         }
         if (ujSav != null) {
-            ujSav.elfogad(this);
             this.aktualisSav = ujSav;
+            ujSav.elfogad(this);
         }
         Skeleton.end("");
     }

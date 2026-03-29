@@ -42,7 +42,6 @@ public class Busz extends Jarmu {
             }
         }
 
-
         Skeleton.end("");
     }
 
@@ -56,7 +55,20 @@ public class Busz extends Jarmu {
     public void elakad() { Skeleton.hivas(this, "elakad()"); Skeleton.end(""); }
 
     @Override
-    public void megcsuszik() { Skeleton.hivas(this, "megcsuszik()"); Skeleton.end(""); }
+    public void megcsuszik() { 
+        Skeleton.hivas(this, "megcsuszik()"); 
+
+        if (aktualisSav != null) {
+            java.util.List<Jarmu> rajta = aktualisSav.getRajtaAllok();
+            for (Jarmu j : rajta) {
+                if (j != this) {
+                    j.utkozik(this); 
+                }
+            }
+        }
+
+        Skeleton.end(""); 
+    }
 
     @Override
     public void utkozik(Jarmu masik) { 
