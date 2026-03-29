@@ -54,14 +54,25 @@ public class Sav implements IIdomulo {
         this.so = mennyiseg; 
     }
 
+    /**
+     * 
+     * @param szam
+     */
     public void setAthaladasokSzama(int szam) {
         this.athaladasokSzama = szam;
     }
-
+    /**
+     * Beállítja a sózás időzítőjét.
+     * @param idozito
+     */
     public void setSozasIdozito(int idozito) {
         this.sozasIdozito = idozito;
     }
 
+    /**
+     * Visszaadja, hogy a sáv jeges-e.
+     * @return
+     */
     public boolean isJegpancel(){
         return this.jegPancel;
     }
@@ -108,7 +119,10 @@ public class Sav implements IIdomulo {
         Skeleton.end(melyHo ? "true" : "false");
         return melyHo;
     }
-
+    /**
+     * Beállítja, hogy a sáv jeges-e.
+     * @param jeges
+     */
     public void setJegpancel(boolean jeges) { 
         Skeleton.hivas(this, "setJegPancel(" + jeges + ")");
         this.jegPancel = jeges; 
@@ -246,6 +260,10 @@ public class Sav implements IIdomulo {
         return this.hoVastagsag;
     }
 
+    /**
+     * Beállítja az utszakaszt.
+     * @param u
+     */
     public void setUtszakasz(Utszakasz u) {
         this.utszakasz = u;
     }

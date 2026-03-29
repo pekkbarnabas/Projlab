@@ -21,11 +21,17 @@ public class Utszakasz {
         Skeleton.end("[Sav lista]");
         return savok;
     }
-
+    /**
+     * A járművek átvezetése a szakaszon.
+     * @param vegpont
+     */
     public void setVegpont(Csomopont vegpont) { 
         this.vegpont = vegpont; 
     }
-
+    /**
+     * 
+     * @return
+     */
     public Csomopont getVegpont() { 
         return this.vegpont; 
     }
@@ -33,11 +39,17 @@ public class Utszakasz {
     public void setSavok(List<Sav> savok) { 
         this.savok = savok; 
     }
-
+    /**
+     * 
+     * @param magassag
+     */
     public void setMagassag(int magassag) {
         this.magassag = magassag;
     }
-
+    /**
+     * Hozzáad egy sávot az útszakaszhoz, és beállítja a sávhoz tartozó útszakaszt.
+     * @param s
+     */
     public void addSav(Sav s) {
         if (s != null) {
             s.setUtszakasz(this);

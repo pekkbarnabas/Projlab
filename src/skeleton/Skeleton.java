@@ -32,7 +32,7 @@ public class Skeleton {
     public static void tesztesetFuttatasa(int sorszam){
         behuzas = 0;
         System.out.println("\n[ " + sorszam + ". Teszteset elindul... ]");
-
+        // A teszteseteket külön-külön metódusokban valósítjuk meg, hogy áttekinthetőbb legyen a kód.
         switch(sorszam){
             case 1: autoNormalMozgasTeszt(); break;
             case 2: kikerulesTeszt(); break;

@@ -11,13 +11,20 @@ public class Csomopont {
     /** Gyűjtemény az Utszakasz objektumokról, amelyek a csomópontból kiindulnak. */
     private List<Utszakasz> kijaratok;
     private String nev;
-
+    /**
+     * Visszaadja a csomópontból kiinduló útszakaszokat.
+     * @return
+     */
     public List<Utszakasz> getKijaratok() {
         Skeleton.hivas(this, "getKijaratok()");
         Skeleton.end("[Utszakasz lista]");
         return kijaratok;
     }
 
+    /**
+     * Beállítja a csomópontból kiinduló útszakaszokat.
+     * @param kijaratok
+     */
     public void setKijaratok(List<Utszakasz> kijaratok) { this.kijaratok = kijaratok; }
     public void setNev(String nev) { this.nev = nev; }
     public String getNev() {return this.nev;}
